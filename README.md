@@ -14,9 +14,30 @@ Players must manage **Oxygen, Food, Energy, Robots, and Colony Resources** while
 
 # 📸 Preview
 
-<p align="center">
-  <img src="preview.png" alt="Space Colony Survival Preview" width="850">
-</p>
+```text
+==================================================
+             🚀 SPACE COLONY SURVIVAL 🚀
+==================================================
+
+DAY : 1/7
+
+🫁 Oxygen : 100
+🍖 Food    : 100
+⚡ Energy  : 100
+🤖 Robots  : 3
+🏆 Score   : 0
+
+==================================================
+
+1️⃣ Collect Resources
+2️⃣ Repair Colony
+3️⃣ Recharge Robots
+4️⃣ Eat Food
+5️⃣ Next Day
+6️⃣ Exit
+
+Enter Choice:
+```
 
 ---
 
@@ -102,23 +123,17 @@ Effects:
 - Robot Damage
 - Colony Damage
 
----
-
 ## 💨 Oxygen Leakage
 
 - Oxygen decreases rapidly
 - Colony efficiency drops
 - Repairs required
 
----
-
 ## ☀️ Solar Storm
 
 - Robot malfunction
 - Energy loss
 - Communication failure
-
----
 
 ## 🌌 Peaceful Day
 
@@ -130,26 +145,22 @@ Resources remain safe.
 
 # 👨‍🚀 Colony Characters
 
-## 👨‍🚀 Astronaut
-
+### 👨‍🚀 Astronaut
 - Explores the planet
 - Collects resources
 - Supports colony survival
 
-## 👨‍🔧 Engineer
-
+### 👨‍🔧 Engineer
 - Repairs damaged systems
 - Fixes oxygen leaks
 - Maintains equipment
 
-## 🤖 Robot
-
+### 🤖 Robot
 - Automates work
 - Collects resources
 - Requires recharging
 
-## 👽 Alien
-
+### 👽 Alien
 - Attacks the colony
 - Damages resources
 - Creates survival challenges
@@ -214,7 +225,6 @@ python "final space colony.py"
 Space-Colony-Survival-System/
 │
 ├── README.md
-├── preview.png
 ├── final space colony.py
 ├── space_colony_survival_game.html
 │
@@ -222,10 +232,8 @@ Space-Colony-Survival-System/
 ├── Human
 │   ├── Astronaut
 │   └── Engineer
-│
 ├── Robot
 ├── Alien
-│
 └── SpaceColony
 ```
 
@@ -274,6 +282,7 @@ This project demonstrates:
 - ✅ Achievement System
 
 ---
+
 # 👨‍💻 Author
 
 ## **Zaafir Ali**
@@ -282,7 +291,7 @@ This project demonstrates:
 
 💻 Python Developer
 
-🚀 Passionate about Artificial Intelligence, Object-Oriented Programming (OOP), and Software Development.
+🚀 Passionate about Artificial Intelligence, Object-Oriented Programming (OOP).
 
 ---
 
