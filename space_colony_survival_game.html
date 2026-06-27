@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Space Colony: Titan Base</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#05080f;--bg2:#0a1020;--bg3:#0d1530;--panel:#0f1a2e;--panel2:#12203a;
+    --border:#1e3a5f;--border2:#2a4f80;
+    --cyan:#00d4ff;--cyan2:#0099cc;--cyan3:#004466;
+    --gold:#ffa500;--gold2:#cc7700;--gold3:#3a2000;
+    --green:#00ff88;--green2:#00aa55;--green3:#003322;
+    --red:#ff4444;--red2:#cc1111;--red3:#330000;
+    --orange:#ff8c00;--blue:#4488ff;--purple:#9944ff;
+    --text:#e0f0ff;--text2:#8aaccc;--text3:#4a6888;
+    --font-hud:'Orbitron',monospace;--font-body:'Exo 2',sans-serif;
+  }
+  body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-height:100vh;overflow-x:hidden}
+  
+  .stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+  .stars span{position:absolute;border-radius:50%;background:#fff;animation:twinkle 3s infinite}
+  @keyframes twinkle{0%,100%{opacity:.2}50%{opacity:1}}
+  
+  #app{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:12px}
+  
+  /* HEADER */
+  .header{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:linear-gradient(135deg,var(--bg3),var(--panel));border:1px solid var(--border2);border-radius:12px;margin-bottom:12px;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);animation:scanline 3s infinite}
+  @keyframes scanline{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+  .logo{font-family:var(--font-hud);font-size:22px;font-weight:900;color:var(--cyan);text-shadow:0 0 20px var(--cyan);letter-spacing:3px}
+  .logo span{color:var(--gold)}
+  .header-info{display:flex;gap:20px;align-items:center}
+  .day-badge{font-family:var(--font-hud);font-size:13px;color:var(--text2);border:1px solid var(--border2);padding:4px 14px;border-radius:20px;background:var(--bg2)}
+  .day-badge b{color:var(--gold);font-size:16px}
+  .planet-svg{width:50px;height:50px}
+  
+  /* LAYOUT */
+  .main-grid{display:grid;grid-template-columns:280px 1fr 280px;gap:12px;align-items:start}
+  
+  /* PANELS */
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+  .panel-title{font-family:var(--font-hud);font-size:11px;letter-spacing:2px;color:var(--text3);padding:8px 14px;background:var(--bg2);border-bottom:1px solid var(--border);text-transform:uppercase}
+  .panel-body{padding:12px}
+  
+  /* RESOURCE BARS */
+  .res-item{margin-bottom:10px}
+  .res-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+  .res-label{font-size:11px;color:var(--text2);font-family:var(--font-hud);letter-spacing:1px}
+  .res-val{font-size:13px;font-family:var(--font-hud);font-weight:600}
+  .res-bar{height:6px;background:var(--bg);border-radius:3px;overflow:hidden;border:1px solid var(--border)}
+  .res-fill{height:100%;border-radius:3px;transition:width .5s ease}
+  .res-fill.food{background:linear-gradient(90deg,var(--gold2),var(--gold))}
+  .res-fill.oxygen{background:linear-gradient(90deg,var(--cyan2),var(--cyan))}
+  .res-fill.energy{background:linear-gradient(90deg,#aa66ff,var(--purple))}
+  .val-food{color:var(--gold)}
+  .val-oxygen{color:var(--cyan)}
+  .val-energy{color:var(--purple)}
+  .val-ok{color:var(--green)}
+  .val-warn{color:var(--orange)}
+  .val-danger{color:var(--red)}
+  
+  /* CREW CARDS */
+  .crew-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:8px;position:relative;overflow:hidden}
+  .crew-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:2px}
+  .crew-astronaut::before{background:var(--cyan)}
+  .crew-engineer::before{background:var(--gold)}
+  .crew-robot::before{background:var(--purple)}
+  .crew-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .crew-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;border:2px solid}
+  .crew-astronaut .crew-avatar{background:var(--cyan3);border-color:var(--cyan2)}
+  .crew-engineer .crew-avatar{background:var(--gold3);border-color:var(--gold2)}
+  .crew-robot .crew-avatar{background:#1a0a33;border-color:#6622bb}
+  .crew-info{flex:1}
+  .crew-name{font-family:var(--font-hud);font-size:12px;font-weight:600;color:var(--text)}
+  .crew-role{font-size:10px;color:var(--text3);letter-spacing:1px}
+  .crew-stat{margin-bottom:3px}
+  .stat-bar{height:4px;background:var(--bg);border-radius:2px;overflow:hidden}
+  .stat-fill-hp{background:var(--green);transition:width .5s}
+  .stat-fill-ep{background:var(--gold);transition:width .5s}
+  .stat-fill-pw{background:var(--purple);transition:width .5s}
+  .stat-label{font-size:9px;color:var(--text3);display:flex;justify-content:space-between;margin-bottom:1px}
+  
+  /* EVENT LOG */
+  .log-area{max-height:160px;overflow-y:auto;font-size:12px;line-height:1.6}
+  .log-area::-webkit-scrollbar{width:4px}
+  .log-area::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+  .log-entry{padding:3px 0;border-bottom:1px solid var(--border);display:flex;gap:6px;align-items:flex-start}
+  .log-day{color:var(--text3);font-family:var(--font-hud);font-size:9px;margin-top:2px;flex-shrink:0}
+  .log-msg{color:var(--text2);flex:1}
+  .log-msg.ev-danger{color:var(--red)}
+  .log-msg.ev-warn{color:var(--orange)}
+  .log-msg.ev-good{color:var(--green)}
+  .log-msg.ev-info{color:var(--cyan)}
+  
+  /* ACTIONS */
+  .actions-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .action-btn{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 8px;cursor:pointer;text-align:center;transition:all .2s;color:var(--text);position:relative;overflow:hidden}
+  .action-btn:hover:not(:disabled){border-color:var(--border2);background:var(--panel2);transform:translateY(-1px)}
+  .action-btn:active:not(:disabled){transform:scale(.97)}
+  .action-btn:disabled{opacity:.35;cursor:not-allowed}
+  .action-btn .ab-icon{font-size:22px;margin-bottom:4px}
+  .action-btn .ab-name{font-family:var(--font-hud);font-size:10px;letter-spacing:1px;color:var(--text2)}
+  .action-btn .ab-cost{font-size:9px;color:var(--text3);margin-top:2px}
+  .action-btn.cyan-btn{border-color:var(--cyan3)}
+  .action-btn.cyan-btn:hover:not(:disabled){border-color:var(--cyan);box-shadow:0 0 12px rgba(0,212,255,.15)}
+  .action-btn.gold-btn{border-color:var(--gold3)}
+  .action-btn.gold-btn:hover:not(:disabled){border-color:var(--gold);box-shadow:0 0 12px rgba(255,165,0,.15)}
+  .action-btn.purple-btn{border-color:#220044}
+  .action-btn.purple-btn:hover:not(:disabled){border-color:var(--purple);box-shadow:0 0 12px rgba(153,68,255,.15)}
+  .action-btn.green-btn{border-color:var(--green3)}
+  .action-btn.green-btn:hover:not(:disabled){border-color:var(--green);box-shadow:0 0 12px rgba(0,255,136,.15)}
+  .action-btn.red-btn{border-color:var(--red3);background:rgba(80,0,0,.3)}
+  .action-btn.red-btn:hover:not(:disabled){border-color:var(--red);box-shadow:0 0 12px rgba(255,68,68,.15)}
+  
+  /* NEXT DAY */
+  .next-day-btn{width:100%;padding:14px;font-family:var(--font-hud);font-size:14px;letter-spacing:3px;font-weight:700;background:linear-gradient(135deg,#001122,var(--cyan3));border:2px solid var(--cyan);border-radius:10px;color:var(--cyan);cursor:pointer;transition:all .2s;text-transform:uppercase;position:relative;overflow:hidden;margin-top:10px}
+  .next-day-btn::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(0,212,255,.1),transparent);transition:left .4s}
+  .next-day-btn:hover:not(:disabled)::after{left:100%}
+  .next-day-btn:hover:not(:disabled){box-shadow:0 0 20px rgba(0,212,255,.3);transform:translateY(-1px)}
+  .next-day-btn:disabled{opacity:.4;cursor:not-allowed}
+  
+  /* CENTER PANEL */
+  .center-content{display:flex;flex-direction:column;gap:12px}
+  
+  /* PLANET VIEW */
+  .planet-view{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;position:relative;overflow:hidden;min-height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column}
+  .planet-view::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 120%,rgba(0,60,120,.3),transparent 60%)}
+  .planet-canvas{width:140px;height:140px;margin:0 auto 12px}
+  .event-display{font-family:var(--font-hud);font-size:14px;margin-top:8px;padding:8px 20px;border-radius:20px;border:1px solid;letter-spacing:1px}
+  .event-safe{color:var(--green);border-color:var(--green2);background:var(--green3)}
+  .event-alien{color:var(--red);border-color:var(--red2);background:var(--red3)}
+  .event-storm{color:var(--orange);border-color:#664400;background:#1a0d00}
+  .event-leak{color:var(--cyan);border-color:var(--cyan2);background:var(--cyan3)}
+  .event-none{color:var(--text3);border-color:var(--border);background:var(--bg)}
+  .colony-name-big{font-family:var(--font-hud);font-size:18px;color:var(--text);letter-spacing:3px;margin-bottom:4px}
+  .colony-sub{font-size:12px;color:var(--text3);letter-spacing:2px}
+  
+  /* TIPS/HINTS */
+  .tip-box{background:rgba(0,212,255,.05);border:1px solid var(--cyan3);border-radius:8px;padding:8px 12px;font-size:11px;color:var(--text2);line-height:1.6}
+  .tip-box b{color:var(--cyan)}
+  
+  /* MODAL */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:100;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+  .modal{background:var(--panel);border:2px solid var(--border2);border-radius:16px;padding:32px;max-width:440px;width:90%;text-align:center;position:relative}
+  .modal-title{font-family:var(--font-hud);font-size:24px;font-weight:900;margin-bottom:12px}
+  .modal-title.win{color:var(--gold);text-shadow:0 0 30px var(--gold)}
+  .modal-title.lose{color:var(--red);text-shadow:0 0 30px var(--red)}
+  .modal-msg{color:var(--text2);margin-bottom:20px;line-height:1.7;font-size:14px}
+  .modal-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+  .modal-stat{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px}
+  .modal-stat-label{font-size:10px;color:var(--text3);font-family:var(--font-hud);letter-spacing:1px}
+  .modal-stat-val{font-size:18px;font-weight:600;color:var(--text)}
+  .restart-btn{background:linear-gradient(135deg,var(--bg3),var(--panel2));border:2px solid var(--cyan);color:var(--cyan);font-family:var(--font-hud);font-size:14px;letter-spacing:2px;padding:12px 32px;border-radius:10px;cursor:pointer;transition:all .2s}
+  .restart-btn:hover{box-shadow:0 0 20px rgba(0,212,255,.3);transform:translateY(-1px)}
+  
+  /* NOTIFICATION */
+  .notif{position:fixed;top:20px;right:20px;z-index:50;pointer-events:none}
+  .notif-item{background:var(--panel2);border:1px solid var(--border2);border-radius:8px;padding:10px 16px;margin-bottom:8px;font-size:12px;color:var(--text);animation:notifIn .3s ease;font-family:var(--font-hud);letter-spacing:.5px;max-width:260px}
+  @keyframes notifIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+  .notif-good{border-color:var(--green2);color:var(--green)}
+  .notif-bad{border-color:var(--red2);color:var(--red)}
+  .notif-warn{border-color:#664400;color:var(--orange)}
+  .notif-info{border-color:var(--cyan2);color:var(--cyan)}
+  
+  /* PROGRESS TRACK */
+  .progress-track{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px}
+  .track-bar{display:flex;gap:3px;margin-top:6px}
+  .track-seg{flex:1;height:8px;border-radius:2px;background:var(--border);transition:background .3s}
+  .track-seg.done{background:var(--green2)}
+  .track-seg.current{background:var(--cyan);animation:pulse-seg 1s infinite}
+  @keyframes pulse-seg{0%,100%{opacity:.6}50%{opacity:1}}
+  .track-labels{display:flex;justify-content:space-between;font-size:9px;color:var(--text3);font-family:var(--font-hud);margin-top:3px}
+  
+  /* SCORE */
+  .score-box{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center}
+  .score-label{font-size:10px;color:var(--text3);font-family:var(--font-hud);letter-spacing:1px}
+  .score-val{font-family:var(--font-hud);font-size:18px;color:var(--gold);font-weight:700}
+
+  /* ANIM */
+  .flash-green{animation:flashG .5s}
+  .flash-red{animation:flashR .5s}
+  @keyframes flashG{0%,100%{background:var(--panel)}50%{background:var(--green3)}}
+  @keyframes flashR{0%,100%{background:var(--panel)}50%{background:var(--red3)}}
+  
+  /* RESPONSIVE */
+  @media(max-width:900px){.main-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<!-- Stars background -->
+<div class="stars" id="stars"></div>
+
+<div id="app">
+  <div class="header">
+    <div>
+      <div class="logo">TITAN<span>BASE</span></div>
+      <div style="font-size:11px;color:var(--text3);letter-spacing:2px;margin-top:2px">SPACE COLONY SURVIVAL</div>
+    </div>
+    <div class="header-info">
+      <div class="day-badge">DAY <b id="h-day">1</b> / 10</div>
+      <div class="day-badge">SCORE: <b id="h-score" style="color:var(--gold)">0</b></div>
+    </div>
+    <svg class="planet-svg" viewBox="0 0 50 50">
+      <defs>
+        <radialGradient id="pg" cx="35%" cy="30%">
+          <stop offset="0%" stop-color="#3a6faa"/>
+          <stop offset="60%" stop-color="#1a3a6a"/>
+          <stop offset="100%" stop-color="#0a1a3a"/>
+        </radialGradient>
+        <radialGradient id="pg2" cx="50%" cy="50%">
+          <stop offset="0%" stop-color="#2a5a8a" stop-opacity=".6"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+      </defs>
+      <circle cx="25" cy="25" r="20" fill="url(#pg)"/>
+      <ellipse cx="28" cy="18" rx="6" ry="4" fill="#224466" opacity=".7"/>
+      <ellipse cx="18" cy="28" rx="4" ry="3" fill="#1a3a5a" opacity=".5"/>
+      <circle cx="25" cy="25" r="20" fill="url(#pg2)"/>
+      <ellipse cx="25" cy="25" rx="28" ry="5" fill="none" stroke="#4488ff" stroke-width="1.5" opacity=".4"/>
+    </svg>
+  </div>
+
+  <div class="main-grid">
+    <!-- LEFT: Resources + Crew -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      
+      <div class="panel">
+        <div class="panel-title">⬡ Colony Resources</div>
+        <div class="panel-body">
+          <div class="res-item" id="res-food">
+            <div class="res-header">
+              <span class="res-label">🌾 FOOD SUPPLY</span>
+              <span class="res-val val-food" id="rv-food">100</span>
+            </div>
+            <div class="res-bar"><div class="res-fill food" id="rb-food" style="width:100%"></div></div>
+          </div>
+          <div class="res-item" id="res-oxygen">
+            <div class="res-header">
+              <span class="res-label">💨 OXYGEN LEVELS</span>
+              <span class="res-val val-oxygen" id="rv-oxygen">100</span>
+            </div>
+            <div class="res-bar"><div class="res-fill oxygen" id="rb-oxygen" style="width:100%"></div></div>
+          </div>
+          <div class="res-item" id="res-energy">
+            <div class="res-header">
+              <span class="res-label">⚡ ENERGY SUPPLY</span>
+              <span class="res-val val-energy" id="rv-energy">100</span>
+            </div>
+            <div class="res-bar"><div class="res-fill energy" id="rb-energy" style="width:100%"></div></div>
+          </div>
+          <div class="progress-track">
+            <div style="font-size:10px;color:var(--text3);font-family:var(--font-hud);letter-spacing:1px">SURVIVAL PROGRESS</div>
+            <div class="track-bar" id="track-bar"></div>
+            <div class="track-labels"><span>DAY 1</span><span>DAY 5</span><span>DAY 10</span></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="panel">
+        <div class="panel-title">👥 Crew Status</div>
+        <div class="panel-body">
+          <div class="crew-card crew-astronaut" id="cc-alex">
+            <div class="crew-top">
+              <div class="crew-avatar">🧑‍🚀</div>
+              <div class="crew-info">
+                <div class="crew-name">ALEX</div>
+                <div class="crew-role">ASTRONAUT · EXPLORER</div>
+              </div>
+            </div>
+            <div class="crew-stat">
+              <div class="stat-label"><span>HEALTH</span><span id="alex-hp">100</span></div>
+              <div class="stat-bar"><div class="stat-fill-hp" id="alex-hpb" style="width:100%"></div></div>
+            </div>
+            <div class="crew-stat">
+              <div class="stat-label"><span>ENERGY</span><span id="alex-ep">100</span></div>
+              <div class="stat-bar" style="background:var(--bg)"><div class="stat-fill-ep" id="alex-epb" style="width:100%"></div></div>
+            </div>
+          </div>
+          
+          <div class="crew-card crew-engineer" id="cc-david">
+            <div class="crew-top">
+              <div class="crew-avatar">👷</div>
+              <div class="crew-info">
+                <div class="crew-name">DAVID</div>
+                <div class="crew-role">ENGINEER · REPAIR</div>
+              </div>
+            </div>
+            <div class="crew-stat">
+              <div class="stat-label"><span>HEALTH</span><span id="david-hp">100</span></div>
+              <div class="stat-bar"><div class="stat-fill-hp" id="david-hpb" style="width:100%"></div></div>
+            </div>
+            <div class="crew-stat">
+              <div class="stat-label"><span>ENERGY</span><span id="david-ep">100</span></div>
+              <div class="stat-bar" style="background:var(--bg)"><div class="stat-fill-ep" id="david-epb" style="width:100%"></div></div>
+            </div>
+          </div>
+          
+          <div class="crew-card crew-robot" id="cc-robot">
+            <div class="crew-top">
+              <div class="crew-avatar">🤖</div>
+              <div class="crew-info">
+                <div class="crew-name">XR-7</div>
+                <div class="crew-role">MINING ROBOT · DROID</div>
+              </div>
+            </div>
+            <div class="crew-stat">
+              <div class="stat-label"><span>POWER</span><span id="robot-pw">100</span></div>
+              <div class="stat-bar" style="background:var(--bg)"><div class="stat-fill-pw" id="robot-pwb" style="width:100%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+    <!-- CENTER: Planet + Actions -->
+    <div class="center-content">
+      
+      <div class="planet-view">
+        <div class="colony-name-big">⬡ TITAN BASE</div>
+        <div class="colony-sub">SECTOR 7 · OUTER SOLAR SYSTEM</div>
+        <div style="margin:16px 0">
+          <svg width="140" height="140" viewBox="0 0 140 140" class="planet-canvas">
+            <defs>
+              <radialGradient id="titan-g" cx="35%" cy="30%">
+                <stop offset="0%" stop-color="#5588bb"/>
+                <stop offset="50%" stop-color="#1e4a7a"/>
+                <stop offset="100%" stop-color="#0a1a3a"/>
+              </radialGradient>
+              <radialGradient id="atm-g" cx="50%" cy="50%">
+                <stop offset="70%" stop-color="transparent"/>
+                <stop offset="100%" stop-color="rgba(100,160,220,.3)"/>
+              </radialGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <circle cx="70" cy="70" r="58" fill="url(#titan-g)"/>
+            <!-- Surface details -->
+            <ellipse cx="55" cy="50" rx="18" ry="10" fill="#224466" opacity=".5"/>
+            <ellipse cx="85" cy="80" rx="14" ry="8" fill="#1a3a5a" opacity=".4"/>
+            <ellipse cx="40" cy="80" rx="10" ry="6" fill="#2a5a7a" opacity=".3"/>
+            <ellipse cx="90" cy="45" rx="8" ry="5" fill="#3a6a8a" opacity=".3"/>
+            <!-- Atmosphere -->
+            <circle cx="70" cy="70" r="58" fill="url(#atm-g)"/>
+            <circle cx="70" cy="70" r="62" fill="none" stroke="#4488ff" stroke-width="1" opacity=".25"/>
+            <circle cx="70" cy="70" r="66" fill="none" stroke="#4488ff" stroke-width=".5" opacity=".1"/>
+            <!-- Ring -->
+            <ellipse cx="70" cy="70" rx="80" ry="12" fill="none" stroke="#6699cc" stroke-width="2" opacity=".35"/>
+            <!-- Colony icon -->
+            <g filter="url(#glow)">
+              <rect x="60" y="60" width="20" height="14" rx="2" fill="none" stroke="#00d4ff" stroke-width="1.2" opacity=".8"/>
+              <line x1="70" y1="54" x2="70" y2="60" stroke="#00d4ff" stroke-width="1" opacity=".8"/>
+              <circle cx="70" cy="52" r="3" fill="#00d4ff" opacity=".9"/>
+              <line x1="55" y1="67" x2="60" y2="67" stroke="#00d4ff" stroke-width="1" opacity=".6"/>
+              <line x1="80" y1="67" x2="85" y2="67" stroke="#00d4ff" stroke-width="1" opacity=".6"/>
+            </g>
+          </svg>
+        </div>
+        <div class="event-display event-none" id="event-display">AWAITING ORDERS</div>
+      </div>
+      
+      <div class="panel">
+        <div class="panel-title">⚙ Actions</div>
+        <div class="panel-body">
+          <div class="actions-grid">
+            <button class="action-btn cyan-btn" onclick="doExplore()">
+              <div class="ab-icon">🔭</div>
+              <div class="ab-name">Explore</div>
+              <div class="ab-cost">−20 Alex Energy → +Food</div>
+            </button>
+            <button class="action-btn gold-btn" onclick="doRepair()">
+              <div class="ab-icon">🔧</div>
+              <div class="ab-name">Repair Systems</div>
+              <div class="ab-cost">−15 David Energy → +O₂ +Energy</div>
+            </button>
+            <button class="action-btn purple-btn" onclick="doMine()">
+              <div class="ab-icon">⛏</div>
+              <div class="ab-name">Mine Resources</div>
+              <div class="ab-cost">−20 Robot Power → +Energy</div>
+            </button>
+            <button class="action-btn green-btn" onclick="doRest()">
+              <div class="ab-icon">🛌</div>
+              <div class="ab-name">Rest Crew</div>
+              <div class="ab-cost">+25 Alex & David Energy</div>
+            </button>
+            <button class="action-btn purple-btn" onclick="doRecharge()">
+              <div class="ab-icon">🔋</div>
+              <div class="ab-name">Recharge Robot</div>
+              <div class="ab-cost">+30 XR-7 Power</div>
+            </button>
+            <button class="action-btn red-btn" onclick="doNextDay()">
+              <div class="ab-icon">🌅</div>
+              <div class="ab-name">Next Day</div>
+              <div class="ab-cost">Advance time (consumes resources)</div>
+            </button>
+          </div>
+          <div class="tip-box" id="tip-box" style="margin-top:10px">
+            <b>TIP:</b> Perform actions before advancing the day. Each day consumes Food, Oxygen, and Energy.
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+    <!-- RIGHT: Log + Score -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      
+      <div class="panel">
+        <div class="panel-title">📊 Mission Stats</div>
+        <div class="panel-body">
+          <div class="score-box" style="margin-bottom:8px">
+            <div>
+              <div class="score-label">MISSION SCORE</div>
+              <div class="score-val" id="score-val">0</div>
+            </div>
+            <div style="font-size:32px">🏆</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+            <div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:6px;text-align:center">
+              <div style="font-size:10px;color:var(--text3);font-family:var(--font-hud)">ACTIONS</div>
+              <div style="font-size:18px;color:var(--cyan);font-family:var(--font-hud)" id="st-actions">0</div>
+            </div>
+            <div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:6px;text-align:center">
+              <div style="font-size:10px;color:var(--text3);font-family:var(--font-hud)">EVENTS</div>
+              <div style="font-size:18px;color:var(--gold);font-family:var(--font-hud)" id="st-events">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="panel" style="flex:1">
+        <div class="panel-title">📡 Mission Log</div>
+        <div class="panel-body" style="padding:8px">
+          <div class="log-area" id="log-area"></div>
+        </div>
+      </div>
+      
+      <div class="panel">
+        <div class="panel-title">⚠ System Alerts</div>
+        <div class="panel-body">
+          <div id="alerts-area" style="font-size:11px;color:var(--text3);font-family:var(--font-hud)">
+            All systems nominal.
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal" style="display:none">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">GAME OVER</div>
+    <div class="modal-msg" id="modal-msg"></div>
+    <div class="modal-stats" id="modal-stats"></div>
+    <button class="restart-btn" onclick="restartGame()">⟳ RESTART MISSION</button>
+  </div>
+</div>
+
+<!-- Notifications -->
+<div class="notif" id="notif-container"></div>
+
+<script>
+// Generate stars
+(function(){
+  const s=document.getElementById('stars');
+  for(let i=0;i<120;i++){
+    const el=document.createElement('span');
+    const size=Math.random()*2.5+.5;
+    el.style.cssText=`width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-delay:${Math.random()*5}s;animation-duration:${2+Math.random()*4}s`;
+    s.appendChild(el);
+  }
+})();
+
+// ==========================================
+// GAME STATE
+// ==========================================
+let G = {};
+function initGame(){
+  G = {
+    day:1, maxDays:10, gameOver:false,
+    colony:{food:100, oxygen:100, energy:100},
+    astronaut:{name:'Alex',health:100,energy:100},
+    engineer:{name:'David',health:100,energy:100},
+    robot:{model:'XR-7',power:100},
+    score:0, actionsToday:0, totalActions:0, totalEvents:0,
+    log:[],
+    lastEvent:'none',
+    actionsThisDay:0
+  };
+  addLog('Mission started. Colony Titan Base is online.','ev-info');
+  addLog('Crew: Alex (Astronaut), David (Engineer), XR-7 (Robot)','ev-info');
+  updateAll();
+}
+
+// ==========================================
+// HELPERS
+// ==========================================
+function clamp(v,min,max){return Math.max(min,Math.min(max,v));}
+function randi(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+
+function addLog(msg,cls=''){
+  G.log.unshift({day:G.day, msg, cls});
+  if(G.log.length>50)G.log.pop();
+  renderLog();
+}
+
+function notify(msg,cls='notif-info'){
+  const c=document.getElementById('notif-container');
+  const d=document.createElement('div');
+  d.className='notif-item '+cls;
+  d.textContent=msg;
+  c.appendChild(d);
+  setTimeout(()=>{d.style.opacity='0';d.style.transition='opacity .4s';setTimeout(()=>d.remove(),400);},2800);
+}
+
+function showModal(win){
+  const m=document.getElementById('modal');
+  const t=document.getElementById('modal-title');
+  const msg=document.getElementById('modal-msg');
+  const stats=document.getElementById('modal-stats');
+  t.className='modal-title '+(win?'win':'lose');
+  t.textContent=win?'🏆 MISSION COMPLETE!':'💀 MISSION FAILED';
+  msg.textContent=win
+    ?`Congratulations! You survived all ${G.maxDays} days on Planet Titan. The colony is thriving.`
+    :`The colony on Titan Base has failed. Day ${G.day} — ${G.lastEvent}`;
+  stats.innerHTML=`
+    <div class="modal-stat"><div class="modal-stat-label">DAYS SURVIVED</div><div class="modal-stat-val">${G.day-1}</div></div>
+    <div class="modal-stat"><div class="modal-stat-label">FINAL SCORE</div><div class="modal-stat-val" style="color:var(--gold)">${G.score}</div></div>
+    <div class="modal-stat"><div class="modal-stat-label">ACTIONS TAKEN</div><div class="modal-stat-val">${G.totalActions}</div></div>
+    <div class="modal-stat"><div class="modal-stat-label">EVENTS SURVIVED</div><div class="modal-stat-val">${G.totalEvents}</div></div>
+  `;
+  m.style.display='flex';
+}
+
+function restartGame(){
+  document.getElementById('modal').style.display='none';
+  initGame();
+}
+
+// ==========================================
+// ACTIONS
+// ==========================================
+function doExplore(){
+  if(G.gameOver)return;
+  if(G.astronaut.energy<20){notify('⚠ Alex lacks energy to explore!','notif-warn');return;}
+  const found=randi(10,35);
+  G.colony.food=clamp(G.colony.food+found,0,150);
+  G.astronaut.energy-=20;
+  G.score+=found;
+  G.totalActions++;
+  addLog(`Alex explored. Found ${found} food units.`,'ev-good');
+  notify(`🔭 Explored! +${found} Food`,'notif-good');
+  updateAll();
+}
+
+function doRepair(){
+  if(G.gameOver)return;
+  if(G.engineer.energy<15){notify('⚠ David lacks energy to repair!','notif-warn');return;}
+  const rep=randi(10,30);
+  G.colony.oxygen=clamp(G.colony.oxygen+rep,0,150);
+  G.colony.energy=clamp(G.colony.energy+Math.floor(rep/2),0,150);
+  G.engineer.energy-=15;
+  G.score+=rep;
+  G.totalActions++;
+  addLog(`David repaired systems. +${rep} Oxygen, +${Math.floor(rep/2)} Energy.`,'ev-good');
+  notify(`🔧 Systems repaired! +${rep} O₂`,'notif-good');
+  updateAll();
+}
+
+function doMine(){
+  if(G.gameOver)return;
+  if(G.robot.power<20){notify('⚡ XR-7 needs recharge!','notif-warn');return;}
+  const gained=randi(15,40);
+  G.colony.energy=clamp(G.colony.energy+gained,0,150);
+  G.robot.power-=20;
+  G.score+=gained;
+  G.totalActions++;
+  addLog(`XR-7 mined resources. +${gained} energy supply.`,'ev-good');
+  notify(`⛏ Mining complete! +${gained} Energy`,'notif-good');
+  updateAll();
+}
+
+function doRest(){
+  if(G.gameOver)return;
+  G.astronaut.energy=clamp(G.astronaut.energy+25,0,100);
+  G.engineer.energy=clamp(G.engineer.energy+25,0,100);
+  G.totalActions++;
+  addLog('Crew rested. Alex and David energy restored.','ev-info');
+  notify('🛌 Crew rested. +25 Energy each','notif-info');
+  updateAll();
+}
+
+function doRecharge(){
+  if(G.gameOver)return;
+  G.robot.power=clamp(G.robot.power+30,0,100);
+  G.totalActions++;
+  addLog('XR-7 robot recharged. +30 Power.','ev-info');
+  notify('🔋 XR-7 recharged! +30 Power','notif-info');
+  updateAll();
+}
+
+function doNextDay(){
+  if(G.gameOver)return;
+  
+  // Daily resource drain
+  G.colony.food=clamp(G.colony.food-15,0,200);
+  G.colony.oxygen=clamp(G.colony.oxygen-10,0,200);
+  G.colony.energy=clamp(G.colony.energy-8,0,200);
+  G.astronaut.health=clamp(G.astronaut.health-3,0,100);
+  G.engineer.health=clamp(G.engineer.health-3,0,100);
+  
+  // Random event
+  const events=['Alien Attack','Solar Storm','Oxygen Leak','Safe Day','Safe Day','Meteor Shower','Supply Cache'];
+  const ev=events[Math.floor(Math.random()*events.length)];
+  G.lastEvent=ev;
+  G.totalEvents++;
+  
+  let evCls='ev-info';
+  
+  if(ev==='Alien Attack'){
+    const dmg=randi(10,25);
+    G.astronaut.health=clamp(G.astronaut.health-dmg,0,100);
+    G.engineer.health=clamp(G.engineer.health-dmg,0,100);
+    addLog(`⚠ ALIEN ATTACK! Crew took ${dmg} damage.`,'ev-danger');
+    notify(`👾 Alien Attack! −${dmg} HP to crew`,'notif-bad');
+    setEventDisplay('👾 ALIEN ATTACK!','event-alien');
+    evCls='ev-danger';
+  } else if(ev==='Solar Storm'){
+    const dmg=randi(15,30);
+    G.colony.energy=clamp(G.colony.energy-dmg,0,200);
+    addLog(`⚡ Solar storm! Lost ${dmg} energy supply.`,'ev-warn');
+    notify(`☀ Solar Storm! −${dmg} Energy`,'notif-warn');
+    setEventDisplay('☀ SOLAR STORM','event-storm');
+    evCls='ev-warn';
+  } else if(ev==='Oxygen Leak'){
+    const dmg=randi(15,25);
+    G.colony.oxygen=clamp(G.colony.oxygen-dmg,0,200);
+    addLog(`💨 Oxygen leak! Lost ${dmg} oxygen.`,'ev-warn');
+    notify(`💨 Oxygen Leak! −${dmg} O₂`,'notif-warn');
+    setEventDisplay('💨 OXYGEN LEAK','event-leak');
+    evCls='ev-warn';
+  } else if(ev==='Meteor Shower'){
+    const dmg=randi(5,15);
+    G.colony.food=clamp(G.colony.food-dmg,0,200);
+    G.colony.energy=clamp(G.colony.energy-dmg,0,200);
+    addLog(`☄ Meteor shower! Lost ${dmg} food and energy.`,'ev-warn');
+    notify(`☄ Meteor Shower! −${dmg} Food & Energy`,'notif-warn');
+    setEventDisplay('☄ METEOR SHOWER','event-storm');
+  } else if(ev==='Supply Cache'){
+    const bonus=randi(10,20);
+    G.colony.food=clamp(G.colony.food+bonus,0,200);
+    G.score+=bonus*2;
+    addLog(`📦 Supply cache found! +${bonus} food bonus.`,'ev-good');
+    notify(`📦 Supply Cache! +${bonus} Food`,'notif-good');
+    setEventDisplay('📦 SUPPLY CACHE','event-safe');
+  } else {
+    addLog('✅ Safe day. No major events.','ev-info');
+    setEventDisplay('✅ SAFE DAY','event-safe');
+    G.score+=20;
+  }
+  
+  // Clamp all
+  G.colony.food=clamp(G.colony.food,0,200);
+  G.colony.oxygen=clamp(G.colony.oxygen,0,200);
+  G.colony.energy=clamp(G.colony.energy,0,200);
+  
+  G.day++;
+  updateAll();
+  checkGameEnd();
+}
+
+function setEventDisplay(text,cls){
+  const el=document.getElementById('event-display');
+  el.textContent=text;
+  el.className='event-display '+cls;
+}
+
+function checkGameEnd(){
+  if(G.colony.food<=0){G.gameOver=true;G.lastEvent='Starvation';showModal(false);return;}
+  if(G.colony.oxygen<=0){G.gameOver=true;G.lastEvent='Oxygen Depleted';showModal(false);return;}
+  if(G.colony.energy<=0){G.gameOver=true;G.lastEvent='Power Failure';showModal(false);return;}
+  if(G.astronaut.health<=0){G.gameOver=true;G.lastEvent='Astronaut KIA';showModal(false);return;}
+  if(G.engineer.health<=0){G.gameOver=true;G.lastEvent='Engineer KIA';showModal(false);return;}
+  if(G.day>G.maxDays){G.gameOver=true;showModal(true);return;}
+}
+
+// ==========================================
+// RENDER
+// ==========================================
+function updateAll(){
+  const {colony:c,astronaut:a,engineer:e,robot:r}=G;
+  
+  // Header
+  document.getElementById('h-day').textContent=G.day;
+  document.getElementById('h-score').textContent=G.score;
+  document.getElementById('score-val').textContent=G.score;
+  document.getElementById('st-actions').textContent=G.totalActions;
+  document.getElementById('st-events').textContent=G.totalEvents;
+  
+  // Resources (cap display at 150 for bars)
+  const fcap=150;
+  setRes('food',c.food,fcap);
+  setRes('oxygen',c.oxygen,fcap);
+  setRes('energy',c.energy,fcap);
+  
+  // Crew
+  setCrewBar('alex-hp','alex-hpb',a.health,100,'stat-fill-hp');
+  setCrewBar('alex-ep','alex-epb',a.energy,100,'stat-fill-ep');
+  setCrewBar('david-hp','david-hpb',e.health,100,'stat-fill-hp');
+  setCrewBar('david-ep','david-epb',e.energy,100,'stat-fill-ep');
+  setCrewBar('robot-pw','robot-pwb',r.power,100,'stat-fill-pw');
+  
+  // Progress track
+  renderTrack();
+  
+  // Alerts
+  renderAlerts();
+  
+  // Tips
+  renderTip();
+}
+
+function setRes(id,val,cap){
+  const pct=Math.round(clamp(val/cap*100,0,100));
+  document.getElementById('rv-'+id).textContent=Math.round(val);
+  document.getElementById('rb-'+id).style.width=pct+'%';
+  const vEl=document.getElementById('rv-'+id);
+  vEl.className='res-val '+(val<=20?'val-danger':val<=40?'val-warn':'val-'+id);
+}
+
+function setCrewBar(tid,bid,val,max,cls){
+  document.getElementById(tid).textContent=Math.round(val);
+  const el=document.getElementById(bid);
+  el.style.width=Math.round(clamp(val/max*100,0,100))+'%';
+}
+
+function renderTrack(){
+  const bar=document.getElementById('track-bar');
+  bar.innerHTML='';
+  for(let i=1;i<=G.maxDays;i++){
+    const seg=document.createElement('div');
+    seg.className='track-seg'+(i<G.day?' done':i===G.day?' current':'');
+    bar.appendChild(seg);
+  }
+}
+
+function renderLog(){
+  const area=document.getElementById('log-area');
+  area.innerHTML=G.log.map(l=>`
+    <div class="log-entry">
+      <span class="log-day">D${l.day}</span>
+      <span class="log-msg ${l.cls}">${l.msg}</span>
+    </div>
+  `).join('');
+}
+
+function renderAlerts(){
+  const {colony:c,astronaut:a,engineer:e,robot:r}=G;
+  const alerts=[];
+  if(c.food<=30)alerts.push(`<span style="color:var(--red)">⚠ FOOD CRITICAL: ${Math.round(c.food)}</span>`);
+  else if(c.food<=50)alerts.push(`<span style="color:var(--orange)">⚡ Food low: ${Math.round(c.food)}</span>`);
+  if(c.oxygen<=30)alerts.push(`<span style="color:var(--red)">⚠ OXYGEN CRITICAL: ${Math.round(c.oxygen)}</span>`);
+  else if(c.oxygen<=50)alerts.push(`<span style="color:var(--orange)">⡸ Oxygen low: ${Math.round(c.oxygen)}</span>`);
+  if(c.energy<=30)alerts.push(`<span style="color:var(--red)">⚠ ENERGY CRITICAL: ${Math.round(c.energy)}</span>`);
+  if(a.health<=30)alerts.push(`<span style="color:var(--red)">⚠ Alex health critical</span>`);
+  if(e.health<=30)alerts.push(`<span style="color:var(--red)">⚠ David health critical</span>`);
+  if(r.power<=20)alerts.push(`<span style="color:var(--orange)">⡸ XR-7 low power</span>`);
+  if(a.energy<=20)alerts.push(`<span style="color:var(--orange)">⡸ Alex needs rest</span>`);
+  if(e.energy<=20)alerts.push(`<span style="color:var(--orange)">⡸ David needs rest</span>`);
+  const el=document.getElementById('alerts-area');
+  el.innerHTML=alerts.length?alerts.join('<br>'):'<span style="color:var(--green)">✓ All systems nominal</span>';
+}
+
+const TIPS=[
+  '<b>TIP:</b> Explore before each day advance to build up food reserves.',
+  '<b>TIP:</b> Repair systems when oxygen drops below 50.',
+  '<b>TIP:</b> Keep robot power above 40 by recharging regularly.',
+  '<b>TIP:</b> Rest crew when energy drops below 30 to stay productive.',
+  '<b>TIP:</b> Mine resources if energy is critically low.',
+  '<b>TIP:</b> Each safe day gives +20 score bonus.',
+  '<b>TIP:</b> Supply Caches give bonus food — lucky events!',
+];
+let tipIdx=0;
+function renderTip(){
+  if(Math.random()<.15){tipIdx=(tipIdx+1)%TIPS.length;}
+  document.getElementById('tip-box').innerHTML=TIPS[tipIdx];
+}
+
+// ==========================================
+// START
+// ==========================================
+initGame();
+</script>
+</body>
+</html>
