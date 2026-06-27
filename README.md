@@ -1,232 +1,211 @@
-# Space-Colony-Survival-System
-An open-source survival game where players build, manage, and expand a space colony.
-🚀 Space Colony Survival — Python
-Python OOP Simulation Game (CLI)
+# 🚀 Space Colony Survival — Python
 
-A futuristic command-line survival simulation built with Python using Object-Oriented Programming (OOP) concepts.
+<p align="left">
 
-In this game, Earth is no longer safe, and humanity has established a colony on a distant planet. As the colony commander, your mission is to keep everyone alive by managing Oxygen, Food, Energy, and Robots while defending the colony against dangerous Alien Attacks, Solar Storms, and Oxygen Leakages.
+![Python](https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python&logoColor=white)
+![OOP](https://img.shields.io/badge/OOP-Class%20Based-green?style=for-the-badge&logo=python&logoColor=white)
+![Game](https://img.shields.io/badge/Game-Simulation-orange?style=for-the-badge)
+![Space](https://img.shields.io/badge/Theme-Space-purple?style=for-the-badge)
+![Interface](https://img.shields.io/badge/Interface-CLI-black?style=for-the-badge)
 
-📸 Preview
-===================================
-        SPACE COLONY SURVIVAL
-===================================
+</p>
 
-DAY : 1/7
+A futuristic command-line survival simulation built with **Python** using **Object-Oriented Programming (OOP)** concepts.
 
-Oxygen : 100
-Food    : 100
-Energy  : 100
-Robots  : 3
-Score   : 0
+Players must manage **Oxygen, Food, Energy, and Robots** while defending their colony from **Alien Attacks**, **Solar Storms**, and **Oxygen Leakages**.
 
-===================================
+---
 
-1. Collect Resources
-2. Repair Colony
-3. Recharge Robots
-4. Eat Food
-5. Next Day
-6. Exit
+# 📸 Preview
 
-Enter Choice:
-✨ Features
+<p align="center">
 
-🚀 Manage colony resources
+<img src="images/game.png" width="700">
 
-🫁 Oxygen management system
+</p>
 
-🍖 Food management
+---
 
-⚡ Energy management
+# ✨ Features
 
-🤖 Robot maintenance
+- 🚀 Resource Management
+- 🫁 Oxygen System
+- 🍖 Food Management
+- ⚡ Energy System
+- 🤖 Robot Maintenance
+- 👨‍🚀 Multiple Characters
+- 👽 Alien Attacks
+- ☀️ Solar Storms
+- 💨 Oxygen Leakage
+- 📅 7-Day Survival Challenge
+- 🏆 Score Tracking
+- 🎲 Random Events
+- 💀 Multiple Game Over Conditions
 
-👨‍🚀 Multiple character types
+---
 
-👽 Random alien attacks
+# 🎯 Game Objective
 
-☀️ Solar storm disasters
+Survive for **7 Days** while managing:
 
-💨 Oxygen leakage events
+- 🫁 Oxygen
+- 🍖 Food
+- ⚡ Energy
+- 🤖 Robots
 
-📅 7-Day survival challenge
+If any essential resource reaches **0**, the colony is destroyed.
 
-🏆 Score tracking system
+---
 
-🎲 Randomized gameplay
+# 🎮 Gameplay
 
-💀 Multiple game-over conditions
+## ⛏ Collect Resources
 
-🎯 Game Objective
+- Uses Energy
+- Collects Oxygen
+- Collects Food
+- Earns Score
 
-Survive on the alien planet for 7 days while keeping your colony operational.
+---
 
-Manage:
+## 🔧 Repair Colony
 
-🫁 Oxygen
+- Repairs damaged systems
+- Prevents oxygen leaks
+- Uses Energy
 
-🍖 Food
+---
 
-⚡ Energy
+## 🤖 Recharge Robots
 
-🤖 Robots
+- Restores robot efficiency
+- Improves colony productivity
 
-If any critical resource reaches 0, the colony collapses.
+---
 
-🎮 Gameplay Actions
-⛏ Collect Resources
+## 🍽 Eat Food
 
-Uses Energy
+- Consumes Food
+- Restores Energy
 
-Collects Food
+---
 
-Collects Oxygen
+## 📅 Next Day
 
-Increases Score
+- Advances Day
+- Triggers Random Events
 
-🔧 Repair Colony
+---
 
-Repairs damaged systems
+# ⚠️ Random Events
 
-Prevents Oxygen loss
+### 👽 Alien Attack
 
-Consumes Energy
+Possible enemies
 
-Increases Score
+- 👾 Scout Alien
+- 👾 Warrior Alien
+- 👾 Alien Beast
 
-🤖 Recharge Robots
+Effects
 
-Consumes Energy
+- Energy Loss
+- Robot Damage
+- Colony Damage
 
-Restores Robot efficiency
+---
 
-Improves resource collection
+### 💨 Oxygen Leakage
 
-🍽 Eat Food
+- Oxygen decreases rapidly
+- Colony efficiency drops
 
-Consumes Food
+---
 
-Restores Energy
+### ☀️ Solar Storm
 
-Improves Astronaut health
+- Robot malfunction
+- Energy loss
+- System failures
 
-📅 Next Day
+---
 
-Advances to the next day
+### 🌌 Peaceful Day
 
-Triggers random events
+Nothing bad happens.
 
-Updates colony status
+---
 
-⚠️ Random Events
-👽 Alien Attack
+# 👨‍🚀 Colony Members
 
-Possible enemies:
+## 👨‍🚀 Astronaut
 
-👾 Scout Alien
+- Collect Resources
+- Explore Planet
 
-👾 Warrior Alien
+## 👨‍🔧 Engineer
 
-👾 Alien Beast
+- Repair Colony
+- Fix Oxygen Systems
 
-Effects:
+## 🤖 Robot
 
-Decrease Energy
+- Automatic Worker
+- Resource Collector
 
-Damage Robots
+## 👽 Alien
 
-Reduce Colony Health
+- Enemy Character
+- Attacks Colony
 
-💨 Oxygen Leakage
+---
 
-Causes:
+# 🏆 Win Condition
 
-Rapid Oxygen loss
-
-Requires repairs
-
-Reduces colony efficiency
-
-☀️ Solar Storm
-
-Effects:
-
-Robot malfunction
-
-Energy loss
-
-Communication failure
-
-🌌 Peaceful Day
-
-No disaster occurs.
-
-Resources remain safe.
-
-👨‍🚀 Colony Characters
-👨‍🚀 Astronaut
-
-Collects resources
-
-Explores nearby areas
-
-Consumes Energy
-
-👨‍🔧 Engineer
-
-Repairs colony systems
-
-Fixes oxygen leaks
-
-Maintains equipment
-
-🤖 Robot
-
-Automates work
-
-Collects resources
-
-Requires Energy recharge
-
-👽 Alien
-
-Attacks the colony
-
-Damages resources
-
-Creates survival challenges
-
-🏆 Win Condition
+```text
 🏆 CONGRATULATIONS!
 
 SPACE COLONY SURVIVED!
 
-You successfully protected the colony
-for 7 days.
-
 Humanity has a new future.
-💀 Game Over Conditions
+```
+
+---
+
+# 💀 Game Over
+
+```text
 💀 COLONY DESTROYED!
+```
 
-The game ends if:
+The game ends if
 
-🫁 Oxygen reaches 0
+- Oxygen = 0
+- Food = 0
+- Energy = 0
+- All Robots Destroyed
 
-🍖 Food reaches 0
+---
 
-⚡ Energy reaches 0
+# 🚀 Installation
 
-🤖 All Robots are destroyed
+```bash
+git clone https://github.com/YourUsername/Space-Colony-Survival.git
+```
 
-🚀 Installation
-Clone Repository
-git clone https://github.com/yourusername/Space-Colony-Survival.git
-Open Project Folder
+```bash
 cd Space-Colony-Survival
-Run Program
+```
+
+```bash
 python main.py
-🗂️ Project Structure
+```
+
+---
+
+# 🗂️ Project Structure
+
+```text
 Space-Colony-Survival/
 │
 ├── main.py
@@ -241,54 +220,44 @@ Space-Colony-Survival/
 ├── Alien
 │
 └── SpaceColony
-📚 OOP Concepts Used
-Concept	Usage
-Abstraction	Character abstract class
-Inheritance	Astronaut and Engineer inherit Human
-Polymorphism	perform_duty() method implementation
-Encapsulation	Oxygen, Food, Energy, Robot Status
-Composition	SpaceColony contains Humans, Robots, and Aliens
-Method Overriding	Child classes override perform_duty()
-🧠 Learning Outcomes
+```
 
-This project demonstrates:
+---
 
-✅ Object-Oriented Programming
+# 📚 OOP Concepts Used
 
-✅ Class Design
+| Concept | Usage |
+|---------|-------|
+| Abstraction | Character Abstract Class |
+| Inheritance | Astronaut & Engineer inherit Human |
+| Polymorphism | perform_duty() |
+| Encapsulation | Oxygen, Food, Energy |
+| Composition | SpaceColony contains Objects |
+| Method Overriding | Child Classes |
 
-✅ Inheritance
+---
 
-✅ Polymorphism
+# 🧠 Learning Outcomes
 
-✅ Encapsulation
+- ✅ Object-Oriented Programming
+- ✅ Inheritance
+- ✅ Polymorphism
+- ✅ Encapsulation
+- ✅ Abstraction
+- ✅ Random Event Simulation
+- ✅ Resource Management
 
-✅ Abstraction
+---
 
-✅ Random Event Simulation
+# 🔮 Future Improvements
 
-✅ Resource Management
+- ✅ Inventory System
+- ✅ Robot Upgrades
+- ✅ More Alien Types
+- ✅ Weather System
+- ✅ Difficulty Levels
+- ✅ Save & Load Game
+- ✅ GUI using Tkinter
+- ✅ Achievement System
 
-✅ Simulation-Based Game Development
-
-🔮 Future Improvements
-
-✅ Inventory System
-
-✅ More Alien Species
-
-✅ Robot Upgrades
-
-✅ Colony Expansion
-
-✅ Weather & Planet Environment System
-
-✅ Difficulty Levels
-
-✅ Save/Load Game Feature
-
-✅ GUI Version using Tkinter
-
-✅ Multiplayer Colony Mode
-
-✅ Achievement System
+---
