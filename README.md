@@ -61,7 +61,7 @@ Enter Choice:
 
 # 🎯 Game Objective
 
-Survive for **7 Days** while keeping the colony operational.
+Survive for **10 Days** while keeping the colony operational.
 
 Manage:
 
@@ -175,7 +175,7 @@ Resources remain safe.
 SPACE COLONY SURVIVED!
 
 You successfully protected the colony
-for 7 days.
+for 10 days.
 
 Humanity has a new future.
 ```
