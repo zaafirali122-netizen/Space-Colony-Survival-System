@@ -1,162 +1,155 @@
 # 🚀 Space Colony Survival — Python
 
-<p align="left">
-
 ![Python](https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python&logoColor=white)
 ![OOP](https://img.shields.io/badge/OOP-Class%20Based-green?style=for-the-badge&logo=python&logoColor=white)
 ![Game](https://img.shields.io/badge/Game-Simulation-orange?style=for-the-badge)
-![Space](https://img.shields.io/badge/Theme-Space-purple?style=for-the-badge)
+![Theme](https://img.shields.io/badge/Theme-Space-purple?style=for-the-badge)
 ![Interface](https://img.shields.io/badge/Interface-CLI-black?style=for-the-badge)
-
-</p>
 
 A futuristic command-line survival simulation built with **Python** using **Object-Oriented Programming (OOP)** concepts.
 
-Players must manage **Oxygen, Food, Energy, and Robots** while defending their colony from **Alien Attacks**, **Solar Storms**, and **Oxygen Leakages**.
+Players must manage **Oxygen, Food, Energy, and Robots** while defending their colony from **Alien Attacks, Solar Storms, and Oxygen Leakages**.
 
 ---
 
 # 📸 Preview
 
 <p align="center">
-
-<img src="images/game.png" width="700">
-
+  <img src="images/preview.png" alt="Space Colony Survival Preview" width="800">
 </p>
 
 ---
 
 # ✨ Features
 
-- 🚀 Resource Management
-- 🫁 Oxygen System
-- 🍖 Food Management
-- ⚡ Energy System
-- 🤖 Robot Maintenance
-- 👨‍🚀 Multiple Characters
-- 👽 Alien Attacks
-- ☀️ Solar Storms
-- 💨 Oxygen Leakage
-- 📅 7-Day Survival Challenge
-- 🏆 Score Tracking
-- 🎲 Random Events
-- 💀 Multiple Game Over Conditions
+- 🚀 Manage colony resources
+- 🫁 Oxygen management
+- 🍖 Food management
+- ⚡ Energy management
+- 🤖 Robot maintenance
+- 👨‍🚀 Multiple character types
+- 👽 Random alien attacks
+- ☀️ Solar storm disasters
+- 💨 Oxygen leakage events
+- 📅 7-Day survival challenge
+- 🏆 Score tracking
+- 🎲 Randomized gameplay
+- 💀 Multiple game-over conditions
 
 ---
 
 # 🎯 Game Objective
 
-Survive for **7 Days** while managing:
+Survive on the alien planet for **7 days** while keeping your colony operational.
+
+Manage:
 
 - 🫁 Oxygen
 - 🍖 Food
 - ⚡ Energy
 - 🤖 Robots
 
-If any essential resource reaches **0**, the colony is destroyed.
+If any critical resource reaches **0**, the colony collapses.
 
 ---
 
-# 🎮 Gameplay
+# 🎮 Gameplay Actions
 
 ## ⛏ Collect Resources
 
 - Uses Energy
 - Collects Oxygen
 - Collects Food
-- Earns Score
-
----
+- Increases Score
 
 ## 🔧 Repair Colony
 
 - Repairs damaged systems
 - Prevents oxygen leaks
 - Uses Energy
-
----
+- Increases Score
 
 ## 🤖 Recharge Robots
 
+- Consumes Energy
 - Restores robot efficiency
-- Improves colony productivity
-
----
+- Improves resource collection
 
 ## 🍽 Eat Food
 
 - Consumes Food
 - Restores Energy
-
----
+- Improves astronaut health
 
 ## 📅 Next Day
 
-- Advances Day
-- Triggers Random Events
+- Advances to the next day
+- Triggers random events
+- Updates colony status
 
 ---
 
 # ⚠️ Random Events
 
-### 👽 Alien Attack
+## 👽 Alien Attack
 
-Possible enemies
+Possible enemies:
 
 - 👾 Scout Alien
 - 👾 Warrior Alien
 - 👾 Alien Beast
 
-Effects
+Effects:
 
-- Energy Loss
-- Robot Damage
-- Colony Damage
+- Energy decreases
+- Robots take damage
+- Colony health decreases
 
----
+## 💨 Oxygen Leakage
 
-### 💨 Oxygen Leakage
-
-- Oxygen decreases rapidly
+- Oxygen rapidly decreases
+- Repairs are required
 - Colony efficiency drops
 
----
-
-### ☀️ Solar Storm
+## ☀️ Solar Storm
 
 - Robot malfunction
 - Energy loss
-- System failures
+- Communication failure
+
+## 🌌 Peaceful Day
+
+No disaster occurs.
+
+Resources remain safe.
 
 ---
 
-### 🌌 Peaceful Day
-
-Nothing bad happens.
-
----
-
-# 👨‍🚀 Colony Members
+# 👨‍🚀 Colony Characters
 
 ## 👨‍🚀 Astronaut
 
-- Collect Resources
-- Explore Planet
+- Collects resources
+- Explores nearby areas
+- Consumes energy
 
 ## 👨‍🔧 Engineer
 
-- Repair Colony
-- Fix Oxygen Systems
+- Repairs colony systems
+- Fixes oxygen leaks
+- Maintains equipment
 
 ## 🤖 Robot
 
-- Automatic Worker
-- Resource Collector
+- Automates work
+- Collects resources
+- Requires recharging
 
 ## 👽 Alien
 
-- Enemy Character
-- Attacks Colony
+- Attacks the colony
+- Damages resources
+- Creates survival challenges
 
 ---
 
@@ -167,35 +160,44 @@ Nothing bad happens.
 
 SPACE COLONY SURVIVED!
 
+You successfully protected the colony
+for 7 days.
+
 Humanity has a new future.
 ```
 
 ---
 
-# 💀 Game Over
+# 💀 Game Over Conditions
 
 ```text
 💀 COLONY DESTROYED!
 ```
 
-The game ends if
+The game ends if:
 
-- Oxygen = 0
-- Food = 0
-- Energy = 0
-- All Robots Destroyed
+- 🫁 Oxygen reaches **0**
+- 🍖 Food reaches **0**
+- ⚡ Energy reaches **0**
+- 🤖 All robots are destroyed
 
 ---
 
 # 🚀 Installation
 
+## Clone Repository
+
 ```bash
 git clone https://github.com/YourUsername/Space-Colony-Survival.git
 ```
 
+## Open Project Folder
+
 ```bash
 cd Space-Colony-Survival
 ```
+
+## Run Program
 
 ```bash
 python main.py
@@ -210,6 +212,8 @@ Space-Colony-Survival/
 │
 ├── main.py
 ├── README.md
+├── images/
+│   └── preview.png
 │
 ├── Character (Abstract Class)
 ├── Human
@@ -228,36 +232,42 @@ Space-Colony-Survival/
 
 | Concept | Usage |
 |---------|-------|
-| Abstraction | Character Abstract Class |
-| Inheritance | Astronaut & Engineer inherit Human |
-| Polymorphism | perform_duty() |
-| Encapsulation | Oxygen, Food, Energy |
-| Composition | SpaceColony contains Objects |
-| Method Overriding | Child Classes |
+| Abstraction | Character abstract class |
+| Inheritance | Astronaut and Engineer inherit Human |
+| Polymorphism | Different `perform_duty()` methods |
+| Encapsulation | Oxygen, Food, Energy, Robot Status |
+| Composition | SpaceColony contains Humans, Robots and Aliens |
+| Method Overriding | Child classes override methods |
 
 ---
 
 # 🧠 Learning Outcomes
 
+This project demonstrates:
+
 - ✅ Object-Oriented Programming
+- ✅ Class Design
 - ✅ Inheritance
 - ✅ Polymorphism
 - ✅ Encapsulation
 - ✅ Abstraction
 - ✅ Random Event Simulation
 - ✅ Resource Management
+- ✅ Simulation-Based Game Development
 
 ---
 
 # 🔮 Future Improvements
 
 - ✅ Inventory System
+- ✅ More Alien Species
 - ✅ Robot Upgrades
-- ✅ More Alien Types
+- ✅ Colony Expansion
 - ✅ Weather System
 - ✅ Difficulty Levels
-- ✅ Save & Load Game
-- ✅ GUI using Tkinter
+- ✅ Save / Load Feature
+- ✅ GUI Version using Tkinter
+- ✅ Multiplayer Mode
 - ✅ Achievement System
 
 ---
