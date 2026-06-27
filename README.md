@@ -8,39 +8,39 @@
 
 A futuristic command-line survival simulation built with **Python** using **Object-Oriented Programming (OOP)** concepts.
 
-Players must manage **Oxygen, Food, Energy, and Robots** while defending their colony from **Alien Attacks, Solar Storms, and Oxygen Leakages**.
+Players must manage **Oxygen, Food, Energy, Robots, and Colony Resources** while defending the colony from **Alien Attacks, Solar Storms, and Oxygen Leakages**.
 
 ---
 
 # 📸 Preview
 
 <p align="center">
-  <img src="images/preview.png" alt="Space Colony Survival Preview" width="800">
+  <img src="preview.png" alt="Space Colony Survival Preview" width="850">
 </p>
 
 ---
 
 # ✨ Features
 
-- 🚀 Manage colony resources
-- 🫁 Oxygen management
-- 🍖 Food management
-- ⚡ Energy management
-- 🤖 Robot maintenance
-- 👨‍🚀 Multiple character types
-- 👽 Random alien attacks
-- ☀️ Solar storm disasters
-- 💨 Oxygen leakage events
-- 📅 7-Day survival challenge
-- 🏆 Score tracking
-- 🎲 Randomized gameplay
-- 💀 Multiple game-over conditions
+- 🚀 Space Colony Management
+- 🫁 Oxygen Management System
+- 🍖 Food Management
+- ⚡ Energy System
+- 🤖 Robot Maintenance
+- 👨‍🚀 Multiple Character Types
+- 👽 Random Alien Attacks
+- ☀️ Solar Storm Events
+- 💨 Oxygen Leakage Events
+- 📅 7-Day Survival Challenge
+- 🏆 Score Tracking
+- 🎲 Random Gameplay
+- 💀 Multiple Game Over Conditions
 
 ---
 
 # 🎯 Game Objective
 
-Survive on the alien planet for **7 days** while keeping your colony operational.
+Survive for **7 Days** while keeping the colony operational.
 
 Manage:
 
@@ -49,7 +49,7 @@ Manage:
 - ⚡ Energy
 - 🤖 Robots
 
-If any critical resource reaches **0**, the colony collapses.
+If any important resource reaches **0**, the colony is destroyed.
 
 ---
 
@@ -71,21 +71,18 @@ If any critical resource reaches **0**, the colony collapses.
 
 ## 🤖 Recharge Robots
 
-- Consumes Energy
-- Restores robot efficiency
-- Improves resource collection
+- Restores Robot Efficiency
+- Improves Resource Collection
 
 ## 🍽 Eat Food
 
-- Consumes Food
 - Restores Energy
-- Improves astronaut health
+- Consumes Food
 
 ## 📅 Next Day
 
-- Advances to the next day
-- Triggers random events
-- Updates colony status
+- Advances to the Next Day
+- Triggers Random Events
 
 ---
 
@@ -93,7 +90,7 @@ If any critical resource reaches **0**, the colony collapses.
 
 ## 👽 Alien Attack
 
-Possible enemies:
+Possible Enemies:
 
 - 👾 Scout Alien
 - 👾 Warrior Alien
@@ -101,21 +98,27 @@ Possible enemies:
 
 Effects:
 
-- Energy decreases
-- Robots take damage
-- Colony health decreases
+- Energy Loss
+- Robot Damage
+- Colony Damage
+
+---
 
 ## 💨 Oxygen Leakage
 
-- Oxygen rapidly decreases
-- Repairs are required
+- Oxygen decreases rapidly
 - Colony efficiency drops
+- Repairs required
+
+---
 
 ## ☀️ Solar Storm
 
 - Robot malfunction
 - Energy loss
 - Communication failure
+
+---
 
 ## 🌌 Peaceful Day
 
@@ -129,13 +132,13 @@ Resources remain safe.
 
 ## 👨‍🚀 Astronaut
 
+- Explores the planet
 - Collects resources
-- Explores nearby areas
-- Consumes energy
+- Supports colony survival
 
 ## 👨‍🔧 Engineer
 
-- Repairs colony systems
+- Repairs damaged systems
 - Fixes oxygen leaks
 - Maintains equipment
 
@@ -179,7 +182,7 @@ The game ends if:
 - 🫁 Oxygen reaches **0**
 - 🍖 Food reaches **0**
 - ⚡ Energy reaches **0**
-- 🤖 All robots are destroyed
+- 🤖 All Robots are destroyed
 
 ---
 
@@ -188,19 +191,19 @@ The game ends if:
 ## Clone Repository
 
 ```bash
-git clone https://github.com/YourUsername/Space-Colony-Survival.git
+git clone https://github.com/zaafirali122-netizen/Space-Colony-Survival-System.git
 ```
 
 ## Open Project Folder
 
 ```bash
-cd Space-Colony-Survival
+cd Space-Colony-Survival-System
 ```
 
 ## Run Program
 
 ```bash
-python main.py
+python "final space colony.py"
 ```
 
 ---
@@ -208,12 +211,12 @@ python main.py
 # 🗂️ Project Structure
 
 ```text
-Space-Colony-Survival/
+Space-Colony-Survival-System/
 │
-├── main.py
 ├── README.md
-├── images/
-│   └── preview.png
+├── preview.png
+├── final space colony.py
+├── space_colony_survival_game.html
 │
 ├── Character (Abstract Class)
 ├── Human
@@ -230,13 +233,13 @@ Space-Colony-Survival/
 
 # 📚 OOP Concepts Used
 
-| Concept | Usage |
-|---------|-------|
-| Abstraction | Character abstract class |
+| OOP Concept | Usage |
+|-------------|-------|
+| Abstraction | Character Abstract Class |
 | Inheritance | Astronaut and Engineer inherit Human |
 | Polymorphism | Different `perform_duty()` methods |
 | Encapsulation | Oxygen, Food, Energy, Robot Status |
-| Composition | SpaceColony contains Humans, Robots and Aliens |
+| Composition | SpaceColony contains Humans, Robots, and Aliens |
 | Method Overriding | Child classes override methods |
 
 ---
@@ -253,7 +256,7 @@ This project demonstrates:
 - ✅ Abstraction
 - ✅ Random Event Simulation
 - ✅ Resource Management
-- ✅ Simulation-Based Game Development
+- ✅ Game Development Using Python
 
 ---
 
@@ -267,7 +270,20 @@ This project demonstrates:
 - ✅ Difficulty Levels
 - ✅ Save / Load Feature
 - ✅ GUI Version using Tkinter
-- ✅ Multiplayer Mode
+- ✅ Multiplayer Support
 - ✅ Achievement System
 
 ---
+# 👨‍💻 Author
+
+## **Zaafir Ali**
+
+🎓 Artificial Intelligence Student
+
+💻 Python Developer
+
+🚀 Passionate about Artificial Intelligence, Object-Oriented Programming (OOP), and Software Development.
+
+---
+
+# 🌌 Build • Survive • Defend • Expand 🚀
